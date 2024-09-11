@@ -3,7 +3,6 @@ import { productService } from '@/services/product.service';
 import { shopService } from '@/services/shop.service';
 import { getQueryClient } from '@/utils/get-query-client';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { useSwipeable } from 'react-swipeable';
 
 export default async function InitialData({
 	children,
@@ -28,14 +27,9 @@ export default async function InitialData({
 		staleTime: Infinity,
 	});
 
-	const handlers = useSwipeable({
-		onSwipedDown: () => window.location.reload(),
-		delta: 250,
-	});
-
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
-			<div {...handlers}>{children}</div>
+			{children}
 		</HydrationBoundary>
 	);
 }
