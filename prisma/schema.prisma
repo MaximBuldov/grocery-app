@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  name String @unique
+  createdAt DateTime @default(now())
+
+  selected Boolean
+
+  department Department @relation(fields: [departmentId], references: [id])
+  departmentId Int
+
+  shops Shop[]
+}
+
+model Department {
+  id Int @id @default(autoincrement())
+  name String @unique
+  label String
+  createdAt DateTime @default(now())
+
+  products Product[]
+}
+
+model Shop {
+  id Int @id @default(autoincrement())
+  name String @unique
+  createdAt DateTime @default(now())
+
+  products Product[]
+}
