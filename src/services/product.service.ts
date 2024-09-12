@@ -19,7 +19,7 @@ export interface IParams {
 }
 
 class ProductService {
-	private readonly URL = 'http://localhost:3000/api/product';
+	private readonly URL = '/api/product';
 	readonly KEY = 'products';
 
 	async create(data: IProductForm) {
