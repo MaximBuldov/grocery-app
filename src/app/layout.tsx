@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 	description: 'Buldov family grocery app',
 	manifest: '/manifest.json',
 	viewport:
-		'minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover',
+		'minimum-scale=1, maximum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover',
 	icons: [
 		{ rel: 'apple-touch-icon', url: 'images/icon-128x128.png' },
 		{ rel: 'icon', url: 'images/icon-128x128.png' },
