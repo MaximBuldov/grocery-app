@@ -1,4 +1,6 @@
 import {
+	MutationCache,
+	QueryCache,
 	QueryClient,
 	defaultShouldDehydrateQuery,
 	isServer,
@@ -16,6 +18,16 @@ function makeQueryClient() {
 					query.state.status === 'pending',
 			},
 		},
+		queryCache: new QueryCache({
+			onError: () => {
+				!isServer && window.alert('Something went wrong!');
+			},
+		}),
+		mutationCache: new MutationCache({
+			onError: () => {
+				!isServer && window.alert('Something went wrong!');
+			},
+		}),
 	});
 }
 

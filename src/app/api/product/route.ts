@@ -21,7 +21,7 @@ export async function GET(req: Request) {
 				department: { name: 'desc' },
 			},
 			where: {
-				name: name?.toLocaleLowerCase(),
+				name,
 				selected: isSelected,
 			},
 			include: {
@@ -31,22 +31,33 @@ export async function GET(req: Request) {
 		});
 		return Response.json(res);
 	} catch (error) {
-		return Response.json(error);
+		return Response.json(
+			{ success: false, message: 'Something went wrong', error },
+			{ status: 500 }
+		);
 	}
 }
 
 export async function POST(req: Request) {
-	const { shops, department, name }: IProduct = await req.json();
+	try {
+		const { shops, department, name }: IProduct = await req.json();
 
-	const res = await prisma.product.create({
-		data: {
-			name: name.toLowerCase(),
-			shops: {
-				connect: shops.map((id) => ({ id })),
+		const res = await prisma.product.create({
+			data: {
+				name: name.toLowerCase(),
+				shops: {
+					connect: shops.map((id) => ({ id: Number(id) })),
+				},
+				departmentId: Number(department),
+				selected: false,
 			},
-			departmentId: department,
-			selected: false,
-		},
-	});
-	return Response.json(res);
+		});
+		return Response.json(res);
+	} catch (error) {
+		console.error(error);
+		return Response.json(
+			{ success: false, message: 'Something went wrong', error },
+			{ status: 500 }
+		);
+	}
 }
