@@ -16,12 +16,29 @@ export async function GET(req: Request) {
 		const isSelected =
 			selected === 'true' ? true : selected === 'false' ? false : undefined;
 
+		const products = await prisma.product.findMany();
+
+		await Promise.all(
+			products.map((el) =>
+				prisma.product.update({
+					where: {
+						id: el.id,
+					},
+					data: {
+						name: el.name.toLowerCase(),
+					},
+				})
+			)
+		);
+
 		const res = await prisma.product.findMany({
 			orderBy: {
 				department: { name: 'desc' },
 			},
 			where: {
-				name,
+				name: {
+					contains: name?.toLocaleLowerCase(),
+				},
 				selected: isSelected,
 			},
 			include: {

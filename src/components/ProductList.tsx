@@ -29,8 +29,8 @@ export default function ProductList() {
 			title: 'Product',
 			dataIndex: 'name',
 			key: 'name',
-			render: (el, record) => (
-				<span onClick={() => setDrawer(record)}>{el}</span>
+			render: (el: string, record) => (
+				<span onClick={() => setDrawer(record)}>{el.toLowerCase()}</span>
 			),
 		},
 		{
